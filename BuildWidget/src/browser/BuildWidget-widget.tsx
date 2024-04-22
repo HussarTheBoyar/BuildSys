@@ -44,7 +44,9 @@ export class BuildWidgetWidget extends ReactWidget {
         this.getRootPath();
         console.log("Root Path: " + this.RootPath);
 
-        this.WorkspaceTaskService.getRootFoldersInStringArray().then(strings => {strings.forEach( ele => this.RootPath.push(ele) ); console.log("Push log: " + this.RootPath);} );
+        const strings = this.WorkspaceTaskService.getRootFoldersInStringArray()
+
+        strings.forEach( ele => this.RootPath.push(ele) ); console.log("Push log: " + this.RootPath);
 
         console.log("Root Path change: " + this.RootPath);
 
@@ -111,10 +113,8 @@ export class BuildWidgetWidget extends ReactWidget {
         this.RootPath = [];
         console.log("Check workspaceService");
         let result : string[] = [];
-        this.WorkspaceTaskService.getRootFoldersInStringArray().then(strings => {result=  strings; console.log("tsx log: " + strings + "tsx size:" + strings.length) ;});
-
-        this.WorkspaceTaskService.getRootFoldersInStringArray().then(strings => {strings.forEach( ele => this.RootPath.push(ele) ); console.log("Push log: " + this.RootPath);} );
-
+        const strings = this.WorkspaceTaskService.getRootFoldersInStringArray();
+        strings.forEach( ele => this.RootPath.push(ele) ); console.log("Push log: " + this.RootPath);
         console.log("after change: " + result);
         return result;
      } 

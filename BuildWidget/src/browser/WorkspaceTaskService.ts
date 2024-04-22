@@ -21,22 +21,19 @@ export class WorkspaceTaskService implements IWorkspaceReader{
         // @inject(TaskProviderRegistry) protected readonly taskProviderRegistry: TaskProviderRegistry
     ) { }
 
-    public async getRootFolders(): Promise<URI[]> {
-        console.log(this.workspaceService.roots);
-        return (await this.workspaceService.roots).map(root => root.resource);
+    // @ts-ignore
+    public async getRootFolders(): URI[] {
+        const roots = (await this.workspaceService.roots);
+        return roots.map((root:any) => root.resource);
     }
 
-    public  getRootFoldersInStringArray(): string[] {
+    // @ts-ignore
+    public async getRootFoldersInStringArray(): string[] {
         let uris = this.getRootFolders();
+        uris.forEach(ele => ele.toComponents().path.split('/')[ele.toComponents().path.split('/').length - 1] );
+        let result = uris.map(uri => uri.toComponents().path.split('/')[uri.toComponents().path.split('/').length - 1]);
 
-        uris.then(uri => {console.log(uri.forEach(ele => ele.toComponents().path.split('/')[ele.toComponents().path.split('/').length - 1] ) );})
-
-
-        let result = (await uris).map(uri => uri.toComponents().path.split('/')[uri.toComponents().path.split('/').length - 1]);
-
-        console.log("Result is: ");
-        console.log(result);
-
+        console.log("Result is: ", result);
         return result;
     }
 
